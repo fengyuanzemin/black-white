@@ -4,7 +4,7 @@
   "description": "别踩白块游戏",
   "main": "black.js",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack-dashboard -- webpack",
     "dev": "webpack-dashboard -- webpack-dev-server --content-base build/ --config ./webpack.config.js"
   },
   "keywords": [
@@ -13,9 +13,15 @@
   "author": "fengyuanzemin <fengyuanzemin@gmail.com> (http://blog.fengyuanzemin.com/)",
   "license": "MIT",
   "devDependencies": {
+    "autoprefixer": "^6.4.1",
+    "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.14.0",
     "css-loader": "^0.25.0",
+    "eslint": "^3.5.0",
+    "eslint-config-airbnb": "^11.1.0",
+    "eslint-loader": "^1.5.0",
+    "eslint-plugin-import": "^1.15.0",
     "node-sass": "^3.10.0",
     "postcss-loader": "^0.13.0",
     "precss": "^1.4.0",

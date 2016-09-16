@@ -42,16 +42,12 @@ module.exports = {
         return [precss, autoprefixer]
     },
     // plugins: [
-    //     //     // new webpack.optimize.UglifyJsPlugin({
-    //     //     //     compress: {
-    //     //     //         warnings: false,
-    //     //     //     }
-    //     //     // })
-    //     //     new webpack.NoErrorsPlugin(),
-    //     new webpack.HotModuleReplacementPlugin({
-    //         hot: true
-    //     })
-    // ]
+    //         new webpack.optimize.UglifyJsPlugin({
+    //             compress: {
+    //                 warnings: false,
+    //             }
+    //         })
+    // ],
     plugins: [
         new DashboardPlugin()
     ]

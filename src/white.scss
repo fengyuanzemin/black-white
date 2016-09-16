@@ -1,0 +1,30 @@
+$global-width: 500px;
+
+html {
+  background-color: #333333;
+  font-size: 0;
+}
+
+.container {
+  width: $global-width;
+  height: 100vh;
+  padding: 10px;
+  background-color: #eeeeee;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.row-item {
+  .col-item {
+    display: inline-block;
+    width: ($global-width - 20px)/3;
+    height: 30vh;
+    border:1px solid #eeeeee;
+  }
+}
+.black {
+  background-color: #000000;
+}
+.white {
+  background-color: #ffffff;
+}
