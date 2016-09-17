@@ -17,11 +17,10 @@ function init() {
     generateBlackWhite();
     getRule();
     roll();
-    setInterval(roll, 4000);
-
+    setInterval(roll, 3050)
 }
 
-
+// 生成
 function generateBlackWhite() {
     // 页面第一次加载的时候
     const classIndex = ['first', 'second', 'third'];
@@ -43,6 +42,7 @@ function generateBlackWhite() {
     }
 }
 
+// 重置
 function changeBlackWhite() {
     const item = [...document.querySelectorAll('.row-item')];
     item.map((v) => {
@@ -56,7 +56,7 @@ function changeBlackWhite() {
     });
 }
 
-
+// 规则
 function getRule() {
     CONFIG.container.addEventListener('click', (e) => {
         const target = e.target;
@@ -72,10 +72,9 @@ function getRule() {
                 break;
         }
     });
-
 }
 
-
+// 滚动
 function roll() {
     const firstItem = document.querySelector('.row-item');
     const newItem = createRowItem();
@@ -92,14 +91,25 @@ function roll() {
             }
             return this;
         });
+    }).then(()=> {
         // 异步删除节点,并重新生成class
         setTimeout(()=> {
             removeRowItem();
             changeBlackWhite();
         }, 3000);
+    }).then(()=> {
+        setTimeout(()=> {
+            roll();
+        }, 3050);
     });
 }
 
+// 判断.row-item触底
+function judgeToBottom() {
+
+}
+
+// 插入上面的元素
 function createRowItem() {
     let colItem;
     const random = Math.floor(Math.random() * 3);
@@ -114,7 +124,7 @@ function createRowItem() {
     return rowItem;
 }
 
-
+// 删除下面的元素
 function removeRowItem() {
     const lastChild = CONFIG.container.lastElementChild;
     CONFIG.container.removeChild(lastChild);
