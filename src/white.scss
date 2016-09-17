@@ -1,30 +1,58 @@
 $global-width: 500px;
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 html {
   background-color: #333333;
   font-size: 0;
 }
 
 .container {
-  width: $global-width;
-  height: 100vh;
-  padding: 10px;
-  background-color: #eeeeee;
-  margin: 0 auto;
   overflow: hidden;
+  width: $global-width;
+  margin: 0 auto;
+  position: relative;
+  height: 100vh;
 }
 
 .row-item {
+  position: absolute;
   .col-item {
     display: inline-block;
-    width: ($global-width - 20px)/3;
-    height: 30vh;
-    border:1px solid #eeeeee;
+    width: ($global-width - 6px)/3;
+    height: 33.3vh;
+    border: 1px solid #cccccc;
   }
 }
-.black {
-  background-color: #000000;
+
+.insert {
+  top: -33.3vh;
 }
+
+.first {
+  top: 0;
+}
+
+.second {
+  top: 33.3vh;
+}
+
+.third {
+  top: 66.6vh;
+}
+
+.black {
+  background-color: #111111;
+}
+
 .white {
-  background-color: #ffffff;
+  background-color: #eeeeee;
+}
+
+.roll {
+  transform: translate(0, 33.3vh);
+  transition: transform 3s linear;
 }
