@@ -17,7 +17,7 @@ function init() {
     generateBlackWhite();
     getRule();
     roll();
-    setInterval(roll, 3050)
+    // setInterval(roll, 3050)
 }
 
 // 生成
@@ -98,15 +98,15 @@ function roll() {
             changeBlackWhite();
         }, 3000);
     }).then(()=> {
-        setTimeout(()=> {
+        // setTimeout(()=> {
             roll();
-        }, 3050);
+        // }, 3050);
     });
 }
 
 // 判断.row-item触底
 function judgeToBottom() {
-
+    // document.querySelector('.third')
 }
 
 // 插入上面的元素

@@ -2,7 +2,6 @@
 const path = require('path');
 const precss = require('precss');
 const autoprefixer = require('autoprefixer');
-const DashboardPlugin = require('webpack-dashboard/plugin');
 
 module.exports = {
     cache: false,
@@ -48,7 +47,4 @@ module.exports = {
     //             }
     //         })
     // ],
-    plugins: [
-        new DashboardPlugin()
-    ]
 };
