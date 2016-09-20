@@ -4,8 +4,8 @@
   "description": "别踩白块游戏",
   "main": "black.js",
   "scripts": {
-    "build": "webpack-dashboard -- webpack",
-    "dev": "webpack-dashboard -- webpack-dev-server --content-base build/ --config ./webpack.config.js"
+    "build": "webpack",
+    "dev": "webpack-dev-server --content-base build/ --config ./webpack.config.js"
   },
   "keywords": [
     "游戏"

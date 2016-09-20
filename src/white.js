@@ -3,8 +3,9 @@
  */
 
 
-const CONFIG = {
-    container: document.querySelector('.container')
+const config = {
+    container: document.querySelector('.container'),
+    num: 0
 };
 
 
@@ -23,13 +24,13 @@ function init() {
 // 生成
 function generateBlackWhite() {
     // 页面第一次加载的时候
-    const classIndex = ['first', 'second', 'third'];
+    // const classIndex = ['first', 'second', 'third'];
     const item = [...document.querySelectorAll('.row-item .col-item')];
     // 按顺序排序
-    [...document.querySelectorAll('.row-item')].map((v, i)=> {
-        v.classList.add(classIndex[i]);
-        return item;
-    });
+    // [...document.querySelectorAll('.row-item')].map((v, i)=> {
+    //     v.classList.add(classIndex[i]);
+    //     return item;
+    // });
     // 先将所有的变成白块
     for (let i = 0; i < item.length; i += 1) {
         item[i].classList.add('white');
@@ -43,22 +44,22 @@ function generateBlackWhite() {
 }
 
 // 重置
-function changeBlackWhite() {
-    const item = [...document.querySelectorAll('.row-item')];
-    item.map((v) => {
-        if (v.className === 'row-item insert roll') {
-            v.className = 'row-item first';
-        } else if (v.className === 'row-item first roll') {
-            v.className = 'row-item second';
-        } else if (v.className === 'row-item second roll') {
-            v.className = 'row-item third';
-        }
-    });
-}
+// function changeBlackWhite() {
+//     const item = [...document.querySelectorAll('.row-item')];
+//     item.map((v) => {
+//         if (v.className === 'row-item insert roll') {
+//             v.className = 'row-item first';
+//         } else if (v.className === 'row-item first roll') {
+//             v.className = 'row-item second';
+//         } else if (v.className === 'row-item second roll') {
+//             v.className = 'row-item third';
+//         }
+//     });
+// }
 
 // 规则
 function getRule() {
-    CONFIG.container.addEventListener('click', (e) => {
+    config.container.addEventListener('click', (e) => {
         const target = e.target;
         switch (target.className) {
             case 'col-item white':
@@ -71,42 +72,42 @@ function getRule() {
             default:
                 break;
         }
+        e.stopPropagation();
+    });
+    document.querySelector('.row-item').addEventListener('scroll', (e) => {
+        console.log(1)
     });
 }
 
 // 滚动
 function roll() {
-    const firstItem = document.querySelector('.row-item');
-    const newItem = createRowItem();
-    const promise = new Promise((resolve) => {
-        // 添加节点
-        CONFIG.container.insertBefore(newItem, firstItem);
-        resolve();
-    });
-    promise.then(()=> {
-        // 开始滚动
+    let firstItem = document.querySelector('.container').firstElementChild;
+    let newItem = createRowItem();
+    // 开始滚动
+    config.num += 1;
+
+    setTimeout(() => {
+        config.container.insertBefore(newItem, firstItem);
         [...document.querySelectorAll('.row-item')].map((v)=> {
             if (!v.classList.contains('roll')) {
+                // v.style.transform = `translate(0, ${33.3 * config.num}vh)`;
+                // v.style.transition = `transform ${3 * config.num}s linear`;
+                // // } else {
                 v.classList.add('roll');
             }
             return this;
         });
-    }).then(()=> {
-        // 异步删除节点,并重新生成class
-        setTimeout(()=> {
-            removeRowItem();
-            changeBlackWhite();
-        }, 3000);
-    }).then(()=> {
-        // setTimeout(()=> {
-            roll();
-        // }, 3050);
-    });
+        // config.container.style.transform = `translate(0, ${33.3 * config.num}vh)`;
+        // config.container.style.transition = `transform ${3 * config.num}s linear`;
+
+        removeRowItem();
+        roll()
+    }, 3000);
 }
 
 // 判断.row-item触底
 function judgeToBottom() {
-    // document.querySelector('.third')
+    console.log(document.querySelector('.third').getBoundingClientRect().top)
 }
 
 // 插入上面的元素
@@ -114,18 +115,19 @@ function createRowItem() {
     let colItem;
     const random = Math.floor(Math.random() * 3);
     const rowItem = document.createElement('div');
-    rowItem.setAttribute('class', 'row-item insert');
+    rowItem.setAttribute('class', 'row-item');
     for (let i = 0; i < 3; i += 1) {
         colItem = document.createElement('div');
         i === random ? colItem.setAttribute('class', 'col-item black')
             : colItem.setAttribute('class', 'col-item white');
         rowItem.appendChild(colItem);
     }
+
     return rowItem;
 }
 
 // 删除下面的元素
 function removeRowItem() {
-    const lastChild = CONFIG.container.lastElementChild;
-    CONFIG.container.removeChild(lastChild);
+    const lastChild = config.container.lastElementChild;
+    config.container.removeChild(lastChild);
 }
