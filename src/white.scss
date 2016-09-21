@@ -19,9 +19,7 @@ html {
 }
 
 .row-item {
-  //position: absolute;
-  //transform: translate(0, 0);
-  //transition: transform 3s linear;
+  position: absolute;
   .col-item {
     display: inline-block;
     width: ($global-width - 6px)/3;
@@ -33,19 +31,23 @@ html {
   //}
 }
 
-.insert {
+.insert{
   top: -33.3vh;
 }
 
 .first {
-  top: 0;
+  top: -33.3vh;
 }
 
 .second {
-  top: 33.3vh;
+  top: 0;
 }
 
 .third {
+  top:33.3vh;
+}
+
+.fourth{
   top: 66.6vh;
 }
 
@@ -58,6 +60,6 @@ html {
 }
 //
 .roll {
-  transform: translate(0, 33.3vh);
-  transition: transform 3s linear;
+  transform: translate(0, 133.3vh);
+  transition: transform 12s linear;
 }

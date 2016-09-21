@@ -5,7 +5,8 @@
 
 const config = {
     container: document.querySelector('.container'),
-    num: 0
+    num: 0,
+    animate: 10
 };
 
 
@@ -17,20 +18,20 @@ window.onload = () => {
 function init() {
     generateBlackWhite();
     getRule();
-    roll();
-    // setInterval(roll, 3050)
+    // roll();
+    setInterval(roll, 1000)
 }
 
 // 生成
 function generateBlackWhite() {
     // 页面第一次加载的时候
-    // const classIndex = ['first', 'second', 'third'];
+    const classIndex = ['first', 'second', 'third', 'fourth'];
     const item = [...document.querySelectorAll('.row-item .col-item')];
     // 按顺序排序
-    // [...document.querySelectorAll('.row-item')].map((v, i)=> {
-    //     v.classList.add(classIndex[i]);
-    //     return item;
-    // });
+    [...document.querySelectorAll('.row-item')].map((v, i)=> {
+        v.classList.add(classIndex[i]);
+        return item;
+    });
     // 先将所有的变成白块
     for (let i = 0; i < item.length; i += 1) {
         item[i].classList.add('white');
@@ -42,20 +43,6 @@ function generateBlackWhite() {
         item[random + i].classList.add('black');
     }
 }
-
-// 重置
-// function changeBlackWhite() {
-//     const item = [...document.querySelectorAll('.row-item')];
-//     item.map((v) => {
-//         if (v.className === 'row-item insert roll') {
-//             v.className = 'row-item first';
-//         } else if (v.className === 'row-item first roll') {
-//             v.className = 'row-item second';
-//         } else if (v.className === 'row-item second roll') {
-//             v.className = 'row-item third';
-//         }
-//     });
-// }
 
 // 规则
 function getRule() {
@@ -74,35 +61,28 @@ function getRule() {
         }
         e.stopPropagation();
     });
-    document.querySelector('.row-item').addEventListener('scroll', (e) => {
-        console.log(1)
-    });
 }
 
 // 滚动
 function roll() {
-    let firstItem = document.querySelector('.container').firstElementChild;
-    let newItem = createRowItem();
-    // 开始滚动
-    config.num += 1;
+    const rowItem = [...document.querySelectorAll('.row-item')];
 
-    setTimeout(() => {
-        config.container.insertBefore(newItem, firstItem);
-        [...document.querySelectorAll('.row-item')].map((v)=> {
-            if (!v.classList.contains('roll')) {
-                // v.style.transform = `translate(0, ${33.3 * config.num}vh)`;
-                // v.style.transition = `transform ${3 * config.num}s linear`;
-                // // } else {
-                v.classList.add('roll');
-            }
-            return this;
-        });
-        // config.container.style.transform = `translate(0, ${33.3 * config.num}vh)`;
-        // config.container.style.transition = `transform ${3 * config.num}s linear`;
-
+    if (config.num % 3 === 0 && config.num !== 0) {
+        addRowItem();
         removeRowItem();
-        roll()
-    }, 3000);
+        config.num = 0;
+    } else {
+        config.num += 1;
+    }
+
+    rowItem.map((v)=> {
+        if (!v.classList.contains('roll')) {
+            v.classList.add('roll');
+        }
+        return this;
+    });
+
+
 }
 
 // 判断.row-item触底
@@ -115,7 +95,7 @@ function createRowItem() {
     let colItem;
     const random = Math.floor(Math.random() * 3);
     const rowItem = document.createElement('div');
-    rowItem.setAttribute('class', 'row-item');
+    rowItem.setAttribute('class', 'row-item insert');
     for (let i = 0; i < 3; i += 1) {
         colItem = document.createElement('div');
         i === random ? colItem.setAttribute('class', 'col-item black')
@@ -124,6 +104,14 @@ function createRowItem() {
     }
 
     return rowItem;
+}
+
+// 添加上面的元素
+function addRowItem() {
+    let firstItem = document.querySelector('.container').firstElementChild;
+    let newItem = createRowItem();
+    config.container.insertBefore(newItem, firstItem);
+    newItem.classList.add('roll');
 }
 
 // 删除下面的元素
