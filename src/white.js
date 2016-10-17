@@ -18,8 +18,8 @@ window.onload = () => {
 
 function init() {
     generateBlackWhite();
-    getRule();
-    config.start = setInterval(roll, 1000/60);
+    getClickRule();
+    config.start = setInterval(roll, 1000 / 60);
 }
 
 // 生成
@@ -30,7 +30,7 @@ function generateBlackWhite() {
         item[i].classList.add('white');
     }
     // 然后随机变黑块
-    for (let i = 0; i < item.length; i += 3) {
+    for (let i = 0; i < item.length - 3; i += 3) {
         const random = Math.floor(Math.random() * 3);
         item[random + i].classList.remove('white');
         item[random + i].classList.add('black');
@@ -38,12 +38,11 @@ function generateBlackWhite() {
 }
 
 // 规则
-function getRule() {
+function getClickRule() {
     config.container.addEventListener('click', (e) => {
         const target = e.target;
         switch (target.className) {
             case 'col-item white':
-
                 fail();
                 break;
             case 'col-item black':
@@ -51,11 +50,13 @@ function getRule() {
                 target.classList.add('white');
                 break;
             default:
+                fail();
                 break;
         }
         e.stopPropagation();
     });
 }
+
 // 滚动
 function roll() {
     const container = document.querySelector('.container');
@@ -67,15 +68,12 @@ function roll() {
     }
 
     container.style.top = top + 'px';
-
     if (top === 0) {
         addRowItem();
-        container.style.top= '-33.5vh';
+        container.style.top = '-33.5vh';
         removeRowItem();
-    } else {
-
+        judge();
     }
-
 }
 
 // 插入上面的元素
@@ -106,7 +104,20 @@ function removeRowItem() {
     const lastChild = config.container.lastElementChild;
     config.container.removeChild(lastChild);
 }
+
+// 游戏失败
 function fail() {
     clearInterval(config.start);
     console.log('game over');
+}
+
+// 判断黑块是否触底
+function judge() {
+    const row = [...document.querySelectorAll('.row-item')];
+    const last = row[row.length - 1].childNodes;
+    last.forEach((v)=> {
+        if (v.nodeType === 1 && v.classList.contains('black')) {
+            fail();
+        }
+    });
 }
