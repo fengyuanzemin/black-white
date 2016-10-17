@@ -6,7 +6,8 @@
 const config = {
     container: document.querySelector('.container'),
     num: 0,
-    animate: 10
+    animate: 1,
+    start: null
 };
 
 
@@ -18,20 +19,12 @@ window.onload = () => {
 function init() {
     generateBlackWhite();
     getRule();
-    // roll();
-    setInterval(roll, 1000)
+    config.start = setInterval(roll, 1000/60);
 }
 
 // 生成
 function generateBlackWhite() {
-    // 页面第一次加载的时候
-    const classIndex = ['first', 'second', 'third', 'fourth'];
     const item = [...document.querySelectorAll('.row-item .col-item')];
-    // 按顺序排序
-    [...document.querySelectorAll('.row-item')].map((v, i)=> {
-        v.classList.add(classIndex[i]);
-        return item;
-    });
     // 先将所有的变成白块
     for (let i = 0; i < item.length; i += 1) {
         item[i].classList.add('white');
@@ -50,7 +43,8 @@ function getRule() {
         const target = e.target;
         switch (target.className) {
             case 'col-item white':
-                console.log('game over');
+
+                fail();
                 break;
             case 'col-item black':
                 target.classList.remove('black');
@@ -62,32 +56,26 @@ function getRule() {
         e.stopPropagation();
     });
 }
-
 // 滚动
 function roll() {
-    const rowItem = [...document.querySelectorAll('.row-item')];
-
-    if (config.num % 3 === 0 && config.num !== 0) {
-        addRowItem();
-        removeRowItem();
-        config.num = 0;
+    const container = document.querySelector('.container');
+    let top = parseInt(window.getComputedStyle(document.querySelector('.container'), null).top);
+    if (top + config.animate > 0) {
+        top = 0;
     } else {
-        config.num += 1;
+        top += config.animate;
     }
 
-    rowItem.map((v)=> {
-        if (!v.classList.contains('roll')) {
-            v.classList.add('roll');
-        }
-        return this;
-    });
+    container.style.top = top + 'px';
 
+    if (top === 0) {
+        addRowItem();
+        container.style.top= '-33.5vh';
+        removeRowItem();
+    } else {
 
-}
+    }
 
-// 判断.row-item触底
-function judgeToBottom() {
-    console.log(document.querySelector('.third').getBoundingClientRect().top)
 }
 
 // 插入上面的元素
@@ -95,7 +83,7 @@ function createRowItem() {
     let colItem;
     const random = Math.floor(Math.random() * 3);
     const rowItem = document.createElement('div');
-    rowItem.setAttribute('class', 'row-item insert');
+    rowItem.setAttribute('class', 'row-item');
     for (let i = 0; i < 3; i += 1) {
         colItem = document.createElement('div');
         i === random ? colItem.setAttribute('class', 'col-item black')
@@ -111,11 +99,14 @@ function addRowItem() {
     let firstItem = document.querySelector('.container').firstElementChild;
     let newItem = createRowItem();
     config.container.insertBefore(newItem, firstItem);
-    newItem.classList.add('roll');
 }
 
 // 删除下面的元素
 function removeRowItem() {
     const lastChild = config.container.lastElementChild;
     config.container.removeChild(lastChild);
+}
+function fail() {
+    clearInterval(config.start);
+    console.log('game over');
 }

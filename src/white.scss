@@ -1,65 +1,40 @@
 $global-width: 500px;
 
 * {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 html {
-  background-color: #333333;
-  font-size: 0;
+    background-color: #333333;
+    font-size: 0;
 }
 
+.main{
+    overflow: hidden;
+    width:$global-width;
+    height: 100vh;
+    margin: 0 auto;
+}
 .container {
-  overflow: hidden;
-  width: $global-width;
-  margin: 0 auto;
-  position: relative;
-  height: 100vh;
+    width: $global-width;
+    position: relative;
+    top: -33.5vh;
 }
 
 .row-item {
-  position: absolute;
-  .col-item {
-    display: inline-block;
-    width: ($global-width - 6px)/3;
-    height: 33.3vh;
-    border: 1px solid #cccccc;
-  }
-  //&:first-of-type{
-  //  transform: translate(0, -33.3vh);
-  //}
-}
-
-.insert{
-  top: -33.3vh;
-}
-
-.first {
-  top: -33.3vh;
-}
-
-.second {
-  top: 0;
-}
-
-.third {
-  top:33.3vh;
-}
-
-.fourth{
-  top: 66.6vh;
+    .col-item {
+        display: inline-block;
+        width: ($global-width - 6px)/3;
+        height: 33.3vh;
+        border: 1px solid #cccccc;
+    }
 }
 
 .black {
-  background-color: #111111;
+    background-color: #111111;
 }
 
 .white {
-  background-color: #eeeeee;
-}
-//
-.roll {
-  transform: translate(0, 133.3vh);
-  transition: transform 12s linear;
+    background-color: #eeeeee;
 }
