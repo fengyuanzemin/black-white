@@ -6,7 +6,7 @@
 const config = {
     container: document.querySelector('.container'),
     num: 0,
-    animate: 1,
+    animate: 3,
     start: null
 };
 
@@ -43,6 +43,7 @@ function getClickRule() {
         const target = e.target;
         switch (target.className) {
             case 'col-item white':
+                target.classList.add('red')
                 fail();
                 break;
             case 'col-item black':

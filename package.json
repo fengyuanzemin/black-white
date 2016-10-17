@@ -1,6 +1,6 @@
 {
   "name": "black-white",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "别踩白块游戏",
   "main": "black.js",
   "scripts": {
