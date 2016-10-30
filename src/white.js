@@ -20,6 +20,8 @@ function init() {
     generateBlackWhite();
     getClickRule();
     config.start = setInterval(roll, 1000 / 60);
+    // config.start = window.requestAnimationFrame(roll)
+    // window.requestAnimationFrame(roll)
 }
 
 // 生成
@@ -43,7 +45,7 @@ function getClickRule() {
         const target = e.target;
         switch (target.className) {
             case 'col-item white':
-                target.classList.add('red')
+                target.classList.add('red');
                 fail();
                 break;
             case 'col-item black':
@@ -60,18 +62,17 @@ function getClickRule() {
 
 // 滚动
 function roll() {
-    const container = document.querySelector('.container');
-    let top = parseInt(window.getComputedStyle(document.querySelector('.container'), null).top);
+    let top = parseInt(window.getComputedStyle(config.container, null).top);
     if (top + config.animate > 0) {
         top = 0;
     } else {
         top += config.animate;
     }
 
-    container.style.top = top + 'px';
+    config.container.style.top = top + 'px';
     if (top === 0) {
         addRowItem();
-        container.style.top = '-33.5vh';
+        config.container.style.top = '-33.5vh';
         removeRowItem();
         judge();
     }
@@ -95,8 +96,8 @@ function createRowItem() {
 
 // 添加上面的元素
 function addRowItem() {
-    let firstItem = document.querySelector('.container').firstElementChild;
-    let newItem = createRowItem();
+    const firstItem = config.container.firstElementChild;
+    const newItem = createRowItem();
     config.container.insertBefore(newItem, firstItem);
 }
 
